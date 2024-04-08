@@ -1,0 +1,16 @@
+{
+    "name": "GitHub absolute time display",
+    "version": "1.0.0",
+    "manifest_version": 3,
+    "description": "GitHubの'1 hour ago'とかの表示に絶対時間を追加します",
+    "content_scripts": [
+        {
+            "matches": [
+                "https://github.com/*"
+            ],
+            "js": [
+                "content.js"
+            ]
+        }
+    ]
+}
