@@ -6,10 +6,23 @@ function listUpAndExecute() {
 }
 
 function apply(node) {
-    let date = new Date(node.getAttribute('datetime'));
-    let absDateTime = date.toLocaleString('ja-JP', { timeZone: 'JST' });
-    node.innerHTML += '(' + absDateTime + 'JST)';
-    node.shadowRoot.innerHTML += '(' + absDateTime + 'JST)';
+    if (!node.innerHTML.includes('JST')) {
+        let date = new Date(node.getAttribute('datetime'));
+        let absDateTime = date.toLocaleString('ja-JP', { timeZone: 'JST' });
+        node.innerHTML += '(' + absDateTime + 'JST)';
+        node.shadowRoot.innerHTML += '(' + absDateTime + 'JST)';
+    }
 }
 
 addEventListener('load', listUpAndExecute);
+
+const targetNode = document.getElementById("js-repo-pjax-container");
+
+const config = { attributes: true, childList: true, subtree: true };
+const callback = (mutationList, observer) => {
+    listUpAndExecute();
+};
+
+const observer = new MutationObserver(callback);
+
+observer.observe(targetNode, config);
